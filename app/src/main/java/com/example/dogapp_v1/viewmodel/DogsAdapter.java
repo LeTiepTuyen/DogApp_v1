@@ -59,9 +59,9 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-            tvName = view.findViewById(R.id.tvName);
-            tvOrigin = view.findViewById(R.id.tvOrigin);
-            ivAvatar = view.findViewById(R.id.ivAvatar);
+            tvName = (TextView) view.findViewById(R.id.tvName);
+            tvOrigin = (TextView) view.findViewById(R.id.tvOrigin);
+            ivAvatar = (ImageView) view.findViewById(R.id.ivAvatar);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

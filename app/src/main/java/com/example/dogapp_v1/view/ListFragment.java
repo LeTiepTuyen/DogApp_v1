@@ -22,15 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.exceptions.UndeliverableException;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.plugins.RxJavaPlugins;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class ListFragment extends Fragment {
 
-    private DogsApiService apiService;
+    private DogsApiService  dogsApiService;
     private RecyclerView rvDogs;
-    private ArrayList<DogBreed> dogBreeds;
+    private ArrayList<DogBreed> dogBreeds = new ArrayList<DogBreed>();;
     private DogsAdapter dogsAdapter;
 
     @Override
@@ -52,10 +54,14 @@ public class ListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvDogs  = view.findViewById(R.id.rv_dogs);
-        dogBreeds = new ArrayList<DogBreed>();
+
+        //Set layout cho Recyleview rvContacts:
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvDogs.setLayoutManager(linearLayoutManager);
+
+        //Do du lieu len recyleview
         dogsAdapter = new DogsAdapter(dogBreeds);
         rvDogs.setAdapter(dogsAdapter);
-        rvDogs.setLayoutManager(new LinearLayoutManager(getContext()));
         dogsAdapter.notifyDataSetChanged();
 
 
@@ -67,9 +73,9 @@ public class ListFragment extends Fragment {
                 .subscribeWith(new DisposableSingleObserver<List<DogBreed>>() {
                     @Override
                     public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<DogBreed> dogBreeds1) {
-
+                        Log.d("DEBUG","Success");
                         for (DogBreed dogs: dogBreeds1) {
-                            dogBreeds1.add(dogs);
+                            dogBreeds.add(dogs);
                             dogsAdapter.notifyDataSetChanged();
                         }
                     }
@@ -81,5 +87,16 @@ public class ListFragment extends Fragment {
 
                     }
                 });
+        RxJavaPlugins.setErrorHandler(e -> {
+            if (e instanceof UndeliverableException) {
+                // Merely log undeliverable exceptions
+                Log.d("DEBUG", e.getMessage());
+            } else {
+                // Forward all others to current thread's uncaught exception handler
+                Thread thread = Thread.currentThread();
+                thread.getUncaughtExceptionHandler().uncaughtException(thread, e);
+            }
+        });
     }
+
 }

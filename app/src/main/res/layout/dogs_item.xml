@@ -9,10 +9,11 @@
     <ImageView
         android:id="@+id/ivAvatar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="100dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
+        android:src="@drawable/dog_ava1"
+
         />
 
     <!-- Layout chứa tên và icon trái tim -->
