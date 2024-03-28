@@ -4,12 +4,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,15 +38,20 @@ public class ListFragment extends Fragment {
 
     private DogsApiService  dogsApiService;
     private RecyclerView rvDogs;
-    private ArrayList<DogBreed> dogBreeds = new ArrayList<DogBreed>();;
+    private ArrayList<DogBreed> dogBreeds = new ArrayList<DogBreed>();
+
     private DogsAdapter dogsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         if (getArguments() != null) {
 
         }
+
+
     }
 
     @Override
@@ -50,14 +61,15 @@ public class ListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvDogs  = view.findViewById(R.id.rv_dogs);
 
         //Set layout cho Recyleview rvContacts:
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rvDogs.setLayoutManager(linearLayoutManager);
+        rvDogs.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         //Do du lieu len recyleview
         dogsAdapter = new DogsAdapter(dogBreeds);
@@ -97,6 +109,27 @@ public class ListFragment extends Fragment {
                 thread.getUncaughtExceptionHandler().uncaughtException(thread, e);
             }
         });
+
+
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.menu_search, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.mi_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                dogsAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                dogsAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
 }

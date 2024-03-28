@@ -1,58 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="dog"
+            type="com.example.dogapp_v1.model.DogBreed" />
+    </data>
+
+
+<androidx.cardview.widget.CardView
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
 
-    <!-- Avatar chiếm 2/3 chiều cao của card và match_parent chiều rộng -->
-    <ImageView
-        android:id="@+id/ivAvatar"
+    android:padding="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    android:layout_marginBottom="6dp"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:src="@drawable/dog_ava1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        >
+        <!-- Avatar chiếm 2/3 chiều cao của card và match_parent chiều rộng -->
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dog_ava1"
 
         />
 
     <!-- Layout chứa tên và icon trái tim -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp">
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="@{dog.name}"
+                android:textSize="15dp"
+
+                />
+            <!-- Icon trái tim -->
+            <ImageView
+                android:id="@+id/ivHeartIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_favorite_border_24"
+                android:layout_marginTop="8dp"></ImageView>
 
         <!-- Tên chó -->
+
+        </LinearLayout>
+
+        <!-- Mô tả về giống chó -->
         <TextView
-            android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:id="@+id/tvOrigin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="name"
-            />
-
-        <!-- Icon trái tim -->
-        <ImageView
-            android:id="@+id/ivHeartIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp" />
-
+            android:textSize="12sp"
+            android:text="@{dog.origin}"/>
     </LinearLayout>
 
-    <!-- Mô tả về giống chó -->
-    <TextView
-        android:id="@+id/tvOrigin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginTop="8dp"
-        android:text="origin"
-        />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>
+</layout>
