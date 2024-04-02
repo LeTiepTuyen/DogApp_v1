@@ -23,11 +23,13 @@
     android:layout_marginBottom="6dp"
     >
     <LinearLayout
+        android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="6dp"
+        android:visibility="visible"
         >
         <!-- Avatar chiếm 2/3 chiều cao của card và match_parent chiều rộng -->
         <ImageView
@@ -73,6 +75,34 @@
         <!-- Mô tả về giống chó -->
         <TextView
             android:id="@+id/tvOrigin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:text="@{dog.origin}"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@{dog.name}"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="18sp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray"
